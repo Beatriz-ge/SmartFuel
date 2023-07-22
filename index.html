@@ -116,9 +116,9 @@
       if (isNaN(gasolinaPrice) || isNaN(alcoolPrice)) {
         resultDiv.textContent = 'Por favor, insira valores válidos para os preços da gasolina e do álcool.';
       } else {
-        const gasolinaPerAlcool = gasolinaPrice / alcoolPrice;
+        const gasolinaPerAlcool = alcoolPrice / gasolinaPrice;
 
-        if (gasolinaPerAlcool > 0.7) {
+        if (gasolinaPerAlcool < 0.7) {
           resultDiv.textContent = 'Compensa abastecer com Álcool.';
         } else {
           resultDiv.textContent = 'Compensa abastecer com Gasolina.';
