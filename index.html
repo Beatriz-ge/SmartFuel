@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SmartFuel</title>
+  <style>
+    body {
+      background-color: #F9DA8A;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Lilita One', sans-serif;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .app-name {
+      font-size: 24px;
+    }
+
+    .circle {
+      background-color: white;
+      border: 2px solid black;
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .iconify {
+      font-size: 80px;
+      margin: -20px;
+    }
+
+    .text {
+      margin-top: 20px;
+    }
+
+    .text p {
+      font-size: 18px;
+    }
+
+    .input-box {
+      width: 200px;
+      height: 30px;
+      margin-top: 10px;
+    }
+
+    .calculate-button {
+      background-color: black;
+      color: white;
+      font-family: 'Lilita One', sans-serif;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      margin-top: 20px;
+    }
+    
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css?family=Lilita+One" rel="stylesheet">
+  <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="app-name">SMARTFUEL</div>
+    <div class="circle">
+      <span class="iconify" data-icon="ic:baseline-local-gas-station"></span>
+    </div>
+    <div class="text">
+      <p>GASOLINA (PREÇO POR LITRO):</p>
+      <input id="gasolina" type="text" class="input-box" placeholder="Digite o preço da gasolina">
+    </div>
+    <div class="text">
+      <p>ÁLCOOL (PREÇO POR LITRO):</p>
+      <input id="alcool" type="text" class="input-box" placeholder="Digite o preço do álcool">
+    </div>
+    <button id="calculate-button" class="calculate-button">CALCULAR</button>
+    <div id="result" class="result"></div>
+  </div>
+  
+  <script>
+    const calculateButton = document.getElementById('calculate-button');
+    const gasolinaInput = document.getElementById('gasolina');
+    const alcoolInput = document.getElementById('alcool');
+    const resultDiv = document.getElementById('result');
+  
+    // Adicionando evento de input para formatar o prefixo "R$" e atualizar o valor
+    gasolinaInput.addEventListener('input', function() {
+      formatCurrencyInput(gasolinaInput);
+    });
+  
+    alcoolInput.addEventListener('input', function() {
+      formatCurrencyInput(alcoolInput);
+    });
+  
+    calculateButton.addEventListener('click', function() {
+      // Removendo o prefixo "R$" e convertendo para número
+      const gasolinaPrice = parseFloat(gasolinaInput.value.replace('R$ ', ''));
+      const alcoolPrice = parseFloat(alcoolInput.value.replace('R$ ', ''));
+  
+      if (isNaN(gasolinaPrice) || isNaN(alcoolPrice)) {
+        resultDiv.textContent = 'Por favor, insira valores válidos para os preços da gasolina e do álcool.';
+      } else {
+        const gasolinaPerAlcool = gasolinaPrice / alcoolPrice;
+  
+        if (gasolinaPerAlcool > 0.7) {
+          resultDiv.textContent = 'Compensa abastecer com Álcool.';
+        } else {
+          resultDiv.textContent = 'Compensa abastecer com Gasolina.';
+        }
+      }
+    });
+  
+    function formatCurrencyInput(input) {
+      const value = input.value.trim();
+      if (value !== '' && !value.startsWith('R$ ')) {
+        input.value = 'R$ ' + value;
+      }
+    }
+  </script>
+</body>
+</html>
