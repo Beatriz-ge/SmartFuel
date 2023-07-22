@@ -98,26 +98,26 @@
     const gasolinaInput = document.getElementById('gasolina');
     const alcoolInput = document.getElementById('alcool');
     const resultDiv = document.getElementById('result');
-  
+
     // Adicionando evento de input para formatar o prefixo "R$" e atualizar o valor
     gasolinaInput.addEventListener('input', function() {
       formatCurrencyInput(gasolinaInput);
     });
-  
+
     alcoolInput.addEventListener('input', function() {
       formatCurrencyInput(alcoolInput);
     });
-  
+
     calculateButton.addEventListener('click', function() {
       // Removendo o prefixo "R$" e convertendo para número
       const gasolinaPrice = parseFloat(gasolinaInput.value.replace('R$ ', ''));
       const alcoolPrice = parseFloat(alcoolInput.value.replace('R$ ', ''));
-  
+
       if (isNaN(gasolinaPrice) || isNaN(alcoolPrice)) {
         resultDiv.textContent = 'Por favor, insira valores válidos para os preços da gasolina e do álcool.';
       } else {
         const gasolinaPerAlcool = gasolinaPrice / alcoolPrice;
-  
+
         if (gasolinaPerAlcool > 0.7) {
           resultDiv.textContent = 'Compensa abastecer com Álcool.';
         } else {
@@ -125,10 +125,18 @@
         }
       }
     });
-  
+
     function formatCurrencyInput(input) {
-      const value = input.value.trim();
-      if (value !== '' && !value.startsWith('R$ ')) {
+      let value = input.value.trim();
+      
+      // Bloquear a opção de apagar o primeiro "R$"
+      if (value === 'R$') {
+        input.value = 'R$ ';
+        return;
+      }
+      
+      if (!value.startsWith('R$ ')) {
+        // If the input does not start with 'R$ ', add the prefix
         input.value = 'R$ ' + value;
       }
     }
